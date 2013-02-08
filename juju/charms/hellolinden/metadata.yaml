@@ -1,0 +1,11 @@
+name: hellolinden
+summary: A Hello World application to deploy with juju
+maintainer: rojo <rojo@lindenlab.com>
+description: |
+  A Hello World application to deploy with juju
+provides:
+  website:
+    interface: http
+db:
+    interface: mysql
+
