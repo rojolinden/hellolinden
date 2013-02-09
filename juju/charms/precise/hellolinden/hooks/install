@@ -1,0 +1,30 @@
+#!/bin/bash
+# Here do anything needed to install the service
+# i.e. apt-get install -y foo  or  bzr branch http://myserver/mycode /srv/webroot
+# Make sure this hook exits cleanly and is idempotent, common problems here are failing to account for a debconf question on a dependency, or trying to pull from github without installing git first.
+
+cp -ruv files/* /
+apt-get install -y nginx python-pip python-virtualenv python-dev
+
+pip install  uwsgi
+
+useradd -c 'uwsgi user,,,' -g www-data -d /nonexistent -s /bin/false uwsgi
+usermod -a -G www-data uwsgi
+chown -R uwsgi:www-data /srv/www/hellolinden
+chmod -R g+w /srv/www/hellolinden
+
+logrotate -f /etc/logrotate.d/uwsgi
+
+#virtualenv config
+cd /srv/www/hellolinden
+mkdir static
+virtualenv ./env
+source env/bin/activate
+pip install Flask Flask-SQLAlchemy
+deactivate
+
+#nginx config
+rm /etc/nginx/conf.d/default.conf
+
+service uwsgi restart
+service nginx restart
