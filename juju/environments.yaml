@@ -2,11 +2,11 @@ default: hellolinden
 environments:
   hellolinden:
     type: ec2
-    control-bucket: juju-faefb490d69a41f0a3616a4808e0766b
+    control-bucket: hello-e420416f-2f96-4e35-a142-fa4674f8b603
     admin-secret: 81a1e7429e6847c4941fda7591246594
     default-series: precise
-    juju-origin: distro
+    juju-origin: ppa
     ssl-hostname-verification: true
-    access-key: A
-    secret-key: P
+    access-key: AKIAIG46SX7U62PZ7OIA
+    secret-key: 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
     

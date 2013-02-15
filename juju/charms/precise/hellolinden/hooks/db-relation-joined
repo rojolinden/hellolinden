@@ -3,3 +3,19 @@
 # affect any change needed by relationships being formed
 # This script should be idempotent.
 juju-log $JUJU_REMOTE_UNIT joined
+
+database=`relation-get database`
+user=`relation-get user`
+password=`relation-get password`
+host=`relation-get private-address`
+
+sed -e "s/@USER/$user/" \
+    -e "s/@PASSWORD/$password/" \
+    -e "s/@HOST/$host/" \
+    -e "s/@DATABASE/$database/" \
+    templates/hello.cfg.template > /srv/www/hellolinden/hello.cfg
+
+service uwsgi restart
+service nginx restart
+
+open-port 80/tcp
